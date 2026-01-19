@@ -35,10 +35,10 @@ public class UserController {
     public String getUserPage(Model model) {
         List<User> userList = this.userService.getAllUsers();
         model.addAttribute("userList", userList);
-        return "admin/user/list-user";
+        return "admin/user/table-user";
     }
 
-    @RequestMapping(value = "/admin/user/create", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/user/create")
     public String getCreateUserPage(Model model) {
         model.addAttribute("newUser", new User());
         return "admin/user/create";
