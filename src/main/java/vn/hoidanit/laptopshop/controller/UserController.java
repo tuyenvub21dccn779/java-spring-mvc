@@ -48,6 +48,6 @@ public class UserController {
     public String createUserPage(Model model, @ModelAttribute("newUser") User hoidanit) {
         System.out.println(" run here " + hoidanit);
         userService.handleSaveUser(hoidanit);
-        return "admin/user/create";
+        return "redirect:/admin/user";
     }
 }
