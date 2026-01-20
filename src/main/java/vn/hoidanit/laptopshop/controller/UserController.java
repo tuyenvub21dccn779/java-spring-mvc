@@ -59,4 +59,12 @@ public class UserController {
         userService.handleSaveUser(hoidanit);
         return "redirect:/admin/user";
     }
+
+    @RequestMapping("/admin/user/update/{id}")
+    public String getUserPage(Model model, @PathVariable("id") long id) {
+        User user = this.userService.getUserById(id);
+        model.addAttribute("id", id);
+        model.addAttribute("newUser", user);
+        return "admin/user/update";
+    }
 }
