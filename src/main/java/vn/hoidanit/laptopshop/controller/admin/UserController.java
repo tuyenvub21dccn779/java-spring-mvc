@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
@@ -28,10 +30,14 @@ public class UserController {
 
     private final UserService userService;
     private final UploadService uploadService;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserController(UserService userService, UploadService uploadService) {
+    public UserController(UserService userService,
+            UploadService uploadService,
+            PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.uploadService = uploadService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @RequestMapping("/")
@@ -58,7 +64,7 @@ public class UserController {
         return "admin/user/detail";
     }
 
-    @RequestMapping(value = "/admin/user/create")
+    @GetMapping("/admin/user/create")
     public String getCreateUserPage(Model model) {
         model.addAttribute("newUser", new User());
         return "admin/user/create";
@@ -68,9 +74,16 @@ public class UserController {
     public String createUserPage(Model model, @ModelAttribute("newUser") User hoidanit,
             @RequestParam("hoidanitFile") MultipartFile file) {
         System.out.println(" run here " + hoidanit);
-        // userService.handleSaveUser(hoidanit);
 
         String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
+
+        String hashPassword = this.passwordEncoder.encode(hoidanit.getPassword());
+
+        hoidanit.setAvatar(avatar);
+        hoidanit.setPassword(hashPassword);
+        hoidanit.setRole(this.userService.getRoleByName(hoidanit.getRole().getName()));
+
+        userService.handleSaveUser(hoidanit);
 
         return "redirect:/admin/user";
     }
