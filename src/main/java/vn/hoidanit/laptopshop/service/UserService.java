@@ -17,7 +17,7 @@ public class UserService {
     }
 
     public User getUserById(long id) {
-        return this.userRepository.findById(id).get();
+        return this.userRepository.findById(id);
     }
 
     public List<User> getAllUsers() {
