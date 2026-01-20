@@ -23,6 +23,8 @@ public class Role {
     @OneToMany(mappedBy = "role")
     private List<User> users;
 
+    
+
     public long getId() {
         return id;
     }
@@ -50,6 +52,14 @@ public class Role {
     @Override
     public String toString() {
         return "Role [id=" + id + ", name=" + name + ", description=" + description + "]";
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
     
