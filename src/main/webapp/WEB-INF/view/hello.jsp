@@ -20,9 +20,9 @@
             <h1>
                 ${eric}
             </h1>
-            <h2>
+            <h3>
                 ${hoidanit}
-            </h2>
+            </h3>
             <button class="btn btn-warning">Submit</button>
         </body>
 
