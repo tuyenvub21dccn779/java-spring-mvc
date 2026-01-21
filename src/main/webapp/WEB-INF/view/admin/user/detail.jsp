@@ -1,6 +1,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+            <c:set var="req" value="${pageContext.request}" />
+            <c:set var="baseURL" value="${req.scheme}://${req.serverName}:${req.serverPort}${req.contextPath}" />
+
             <!DOCTYPE html>
             <html lang="en">
 
@@ -39,7 +42,7 @@
 
                                             <hr />
 
-                                            <div class="card" style="width: 60%">
+                                            <div class="card">
                                                 <div class="card-header">
                                                     User information
                                                 </div>
@@ -47,7 +50,12 @@
                                                     <li class="list-group-item">ID: ${user.id}</li>
                                                     <li class="list-group-item">Email: ${user.email}</li>
                                                     <li class="list-group-item">FullName: ${user.fullName}</li>
+                                                    <li class="list-group-item">Role: ${user.role.name}</li>
                                                     <li class="list-group-item">Address: ${user.address}</li>
+                                                    <li class="list-group-item">Avatar:
+                                                        <img src="${baseURL}/images/avatar/${user.avatar}"
+                                                            style="max-height: 250px;" alt="avatar preview" />
+                                                    </li>
                                                 </ul>
                                             </div>
                                             <a href="/admin/user" class="btn btn-success mt-3">Back</a>

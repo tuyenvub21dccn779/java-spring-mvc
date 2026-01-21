@@ -1,6 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+            <c:set var="req" value="${pageContext.request}" />
+            <c:set var="baseURL" value="${req.scheme}://${req.serverName}:${req.serverPort}${req.contextPath}" />
             <!DOCTYPE html>
             <html lang="en">
 
@@ -14,6 +16,18 @@
                 <link href="/css/styles.css" rel="stylesheet" />
 
                 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+                <script>
+                    $(document).ready(() => {
+                        const avatarFile = $("#avatarFile");
+                        avatarFile.change(function (e) {
+                            const imgURL = URL.createObjectURL(e.target.files[0]);
+                            $("#avatarPreview").attr("src", imgURL);
+                            $("#avatarPreview").css({ "display": "block" });
+                        });
+                    });
+                </script>
             </head>
 
             <body class="sb-nav-fixed">
@@ -33,10 +47,10 @@
                                 <div class=" my-5">
                                     <div class="row">
                                         <div class="col-md-6 col-12 mx-auto">
-                                            <h3>Update a user</h3>
+                                            <h3>Update a user with id ${newUser.id}</h3>
                                             <hr />
                                             <form:form method="post" action="/admin/user/update"
-                                                modelAttribute="newUser">
+                                                modelAttribute="newUser" enctype="multipart/form-data">
 
                                                 <div class="mb-3" style="display: none;">
                                                     <label class="form-label">Id:</label>
@@ -61,8 +75,37 @@
                                                     <label class="form-label">Address:</label>
                                                     <form:input type="text" class="form-control" path="address" />
                                                 </div>
-                                                <a href="/admin/user" class="btn btn-success">Back</a>
-                                                <button type="submit" class="btn btn-warning mx-2">Update</button>
+
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Role:</label>
+                                                    <form:select path="role.name" class="form-select">
+                                                        <form:option value="ADMIN">ADMIN</form:option>
+                                                        <form:option value="USER">USER</form:option>
+                                                    </form:select>
+                                                </div>
+                                                <div class="col-md-6  mb-3">
+                                                    <label for="avatarFile" class="form-label">Avatar:</label>
+                                                    <input type="file" class="form-control" id="avatarFile"
+                                                        accept=".png, .jpg, .jpeg" name="hoidanitFile" />
+                                                </div>
+                                                <div class="col-12 mb-3">
+                                                    <c:choose>
+                                                        <c:when test="${newUser.avatar == null}">
+                                                            <img style="max-height: 250px; display: none;"
+                                                                alt="avatar preview" id="avatarPreview" />
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <img style="max-height: 250px;" alt="avatar preview"
+                                                                id="avatarPreview"
+                                                                src="${baseURL}/images/avatar/${newUser.avatar}" />
+                                                        </c:otherwise>
+                                                    </c:choose>
+
+                                                </div>
+                                                <div class="col-12">
+                                                    <a href="/admin/user" class="btn btn-success">Back</a>
+                                                    <button type="submit" class="btn btn-warning mx-2">Update</button>
+                                                </div>
                                             </form:form>
                                         </div>
 

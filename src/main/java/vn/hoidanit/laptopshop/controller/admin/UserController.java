@@ -88,7 +88,7 @@ public class UserController {
         return "redirect:/admin/user";
     }
 
-    @RequestMapping("/admin/user/update/{id}")
+    @GetMapping("/admin/user/update/{id}")
     public String getUpdateUserPage(Model model, @PathVariable("id") long id) {
         User user = this.userService.getUserById(id);
         model.addAttribute("id", id);
@@ -97,15 +97,22 @@ public class UserController {
     }
 
     @PostMapping("/admin/user/update")
-    public String postUpdateUser(Model model, @ModelAttribute("newUser") User user) {
+    public String postUpdateUser(Model model, @ModelAttribute("newUser") User user,
+            @RequestParam("hoidanitFile") MultipartFile file) {
         User currentUser = this.userService.getUserById(user.getId());
+
         if (currentUser != null) {
             System.out.println("run here");
             currentUser.setAddress(user.getAddress());
             currentUser.setFullName(user.getFullName());
             currentUser.setPhone(user.getPhone());
+            if (file != null) {
+                String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
+                currentUser.setAvatar(avatar);
+            }
             this.userService.handleSaveUser(currentUser);
         }
+
         return "redirect:/admin/user";
     }
 
