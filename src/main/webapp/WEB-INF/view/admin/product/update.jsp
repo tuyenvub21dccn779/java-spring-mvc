@@ -82,24 +82,24 @@
                                                 <div class="col-md-6 mb-3">
                                                     <label class="form-label">Factory:</label>
                                                     <form:select path="factory" class="form-select">
-                                                        <form:option value="apple">Apple (MacBook)</form:option>
-                                                        <form:option value="asus">Asus</form:option>
-                                                        <form:option value="lenovo">Lenovo</form:option>
-                                                        <form:option value="dell">Dell</form:option>
-                                                        <form:option value="lg">LG</form:option>
-                                                        <form:option value="acer">Acer</form:option>
+                                                        <form:option value="APPLE">Apple (MacBook)</form:option>
+                                                        <form:option value="ASUS">Asus</form:option>
+                                                        <form:option value="LENOVO">Lenovo</form:option>
+                                                        <form:option value="DELL">Dell</form:option>
+                                                        <form:option value="LG">LG</form:option>
+                                                        <form:option value="ACER">Acer</form:option>
                                                     </form:select>
                                                 </div>
                                                 <div class="col-md-6 mb-3">
                                                     <label class="form-label">Target:</label>
                                                     <form:select path="target" class="form-select">
-                                                        <form:option value="gaming">Gaming</form:option>
-                                                        <form:option value="sinh vien">Sinh Viên - Văn phòng
+                                                        <form:option value="GAMING">Gaming</form:option>
+                                                        <form:option value="SINHVIEN-VANPHONG">Sinh Viên - Văn phòng
                                                         </form:option>
-                                                        <form:option value="thiet ke do hoa">Thiết kế đồ họa
+                                                        <form:option value="THIET-KE-DO-HOA">Thiết kế đồ họa
                                                         </form:option>
-                                                        <form:option value="mong nhe">Mỏng nhẹ</form:option>
-                                                        <form:option value="doanh nhan">Doanh nhân</form:option>
+                                                        <form:option value="MONG-NHE">Mỏng nhẹ</form:option>
+                                                        <form:option value="DOANH-NHAN">Doanh nhân</form:option>
                                                     </form:select>
                                                 </div>
                                                 <div class="col-md-6  mb-3">
