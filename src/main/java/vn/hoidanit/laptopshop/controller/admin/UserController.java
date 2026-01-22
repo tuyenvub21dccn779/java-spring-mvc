@@ -105,8 +105,15 @@ public class UserController {
     }
 
     @PostMapping("/admin/user/update")
-    public String postUpdateUser(Model model, @ModelAttribute("newUser") User user,
+    public String postUpdateUser(Model model,
+            @ModelAttribute("newUser") @Valid User user,
+            BindingResult newUserBindingResult,
             @RequestParam("hoidanitFile") MultipartFile file) {
+
+        if (newUserBindingResult.hasErrors()) {
+            return "admin/user/update";
+        }
+
         User currentUser = this.userService.getUserById(user.getId());
 
         if (currentUser != null) {

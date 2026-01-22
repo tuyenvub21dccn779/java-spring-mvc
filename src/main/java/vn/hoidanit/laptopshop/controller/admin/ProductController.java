@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.validation.Valid;
 import vn.hoidanit.laptopshop.domain.Product;
 import vn.hoidanit.laptopshop.service.ProductService;
 import vn.hoidanit.laptopshop.service.UploadService;
@@ -50,8 +52,13 @@ public class ProductController {
     @PostMapping("/admin/product/create")
     public String createProductPage(
             Model model,
-            @ModelAttribute("newProduct") Product product,
+            @ModelAttribute("newProduct") @Valid Product product,
+            BindingResult newProductBindingResult,
             @RequestParam("productImageFile") MultipartFile file) {
+
+        if (newProductBindingResult.hasErrors()) {
+            return "/admin/product/create";
+        }
 
         String productImage = this.uploadService.handleSaveUploadFile(file, "product");
 
@@ -73,8 +80,13 @@ public class ProductController {
     @PostMapping("/admin/product/update")
     public String postUpdateProduct(
             Model model,
-            @ModelAttribute("product") Product product,
+            @ModelAttribute("product") @Valid Product product,
+            BindingResult newProductBindingResult,
             @RequestParam("productImageFile") MultipartFile file) {
+
+        if (newProductBindingResult.hasErrors()) {
+            return "/admin/product/update";
+        }
         Product currentProduct = this.productService.getProductById(product.getId());
 
         if (currentProduct != null) {
