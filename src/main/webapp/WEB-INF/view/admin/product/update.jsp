@@ -21,6 +21,13 @@
                 <script>
                     $(document).ready(() => {
                         const avatarFile = $("#productImageFile");
+                        const orgImage = "${product.image}";
+                        if (orgImage) {
+                            const urlImage = "/images/product/" + orgImage;
+                            $("#productPreview").attr("src", urlImage);
+                            $("#productPreview").css({ "display": "block" });
+                        }
+
                         avatarFile.change(function (e) {
                             const imgURL = URL.createObjectURL(e.target.files[0]);
                             $("#productPreview").attr("src", imgURL);
@@ -138,18 +145,9 @@
                                                         accept=".png, .jpg, .jpeg" name="productImageFile" />
                                                 </div>
                                                 <div class="col-12 mb-3">
-                                                    <c:choose>
-                                                        <c:when test="${product.image == null}">
-                                                            <img style="max-height: 250px; display: none;"
-                                                                alt="product preview" id="productPreview" />
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            <img style="max-height: 250px;" alt="product preview"
-                                                                id="productPreview"
-                                                                src="${baseURL}/images/product/${product.image}" />
-                                                        </c:otherwise>
-                                                    </c:choose>
-
+                                                    <img style="max-height: 250px; display: none;" alt="product preview"
+                                                        id="productPreview" />
+                                                    ${product.image}
                                                 </div>
                                                 <div class="col-12">
                                                     <a href="/admin/product" class="btn btn-success">Back</a>

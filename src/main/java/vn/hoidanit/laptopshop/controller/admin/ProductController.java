@@ -37,7 +37,7 @@ public class ProductController {
 
     @GetMapping("/admin/product/{id}")
     public String getDetailProductPage(Model model, @PathVariable long id) {
-        Product product = this.productService.getProductById(id);
+        Product product = this.productService.getProductById(id).get();
         model.addAttribute("product", product);
         return "admin/product/detail";
     }
@@ -71,7 +71,7 @@ public class ProductController {
 
     @GetMapping("/admin/product/update/{id}")
     public String getUpdateProductPage(Model model, @PathVariable("id") long id) {
-        Product product = this.productService.getProductById(id);
+        Product product = this.productService.getProductById(id).get();
         model.addAttribute("id", id);
         model.addAttribute("product", product);
         return "admin/product/update";
@@ -87,7 +87,7 @@ public class ProductController {
         if (newProductBindingResult.hasErrors()) {
             return "/admin/product/update";
         }
-        Product currentProduct = this.productService.getProductById(product.getId());
+        Product currentProduct = this.productService.getProductById(product.getId()).get();
 
         if (currentProduct != null) {
             currentProduct.setName(product.getName());
@@ -97,7 +97,7 @@ public class ProductController {
             currentProduct.setQuantity(product.getQuantity());
             currentProduct.setFactory(product.getFactory());
             currentProduct.setTarget(product.getTarget());
-            if (file != null) {
+            if (!file.isEmpty()) {
                 String productImage = this.uploadService.handleSaveUploadFile(file, "product");
                 currentProduct.setImage(productImage);
             }

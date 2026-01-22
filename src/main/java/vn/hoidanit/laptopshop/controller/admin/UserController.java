@@ -110,7 +110,7 @@ public class UserController {
             BindingResult newUserBindingResult,
             @RequestParam("hoidanitFile") MultipartFile file) {
 
-        if (newUserBindingResult.hasErrors()) {
+        if (newUserBindingResult.hasErrors() && !newUserBindingResult.hasFieldErrors("password")) {
             return "admin/user/update";
         }
 
@@ -121,7 +121,7 @@ public class UserController {
             currentUser.setAddress(user.getAddress());
             currentUser.setFullName(user.getFullName());
             currentUser.setPhone(user.getPhone());
-            if (file != null) {
+            if (!file.isEmpty()) {
                 String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
                 currentUser.setAvatar(avatar);
             }

@@ -21,6 +21,13 @@
                 <script>
                     $(document).ready(() => {
                         const avatarFile = $("#avatarFile");
+                        const orgImage = "${newUser.avatar}";
+                        if (orgImage) {
+                            const urlImage = "/images/avatar/" + orgImage;
+                            $("#avatarPreview").attr("src", urlImage);
+                            $("#avatarPreview").css({ "display": "block" });
+                        }
+
                         avatarFile.change(function (e) {
                             const imgURL = URL.createObjectURL(e.target.files[0]);
                             $("#avatarPreview").attr("src", imgURL);
@@ -100,17 +107,8 @@
                                                         accept=".png, .jpg, .jpeg" name="hoidanitFile" />
                                                 </div>
                                                 <div class="col-12 mb-3">
-                                                    <c:choose>
-                                                        <c:when test="${newUser.avatar == null}">
-                                                            <img style="max-height: 250px; display: none;"
-                                                                alt="avatar preview" id="avatarPreview" />
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            <img style="max-height: 250px;" alt="avatar preview"
-                                                                id="avatarPreview"
-                                                                src="${baseURL}/images/avatar/${newUser.avatar}" />
-                                                        </c:otherwise>
-                                                    </c:choose>
+                                                    <img style="max-height: 250px; display: none;" alt="avatar preview"
+                                                        id="avatarPreview" />
 
                                                 </div>
                                                 <div class="col-12">
