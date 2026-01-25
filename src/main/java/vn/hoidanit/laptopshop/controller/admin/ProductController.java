@@ -46,7 +46,7 @@ public class ProductController {
     public String getCreateProductPage(
             Model model) {
         model.addAttribute("newProduct", new Product());
-        return "/admin/product/create";
+        return "admin/product/create";
     }
 
     @PostMapping("/admin/product/create")
@@ -57,7 +57,7 @@ public class ProductController {
             @RequestParam("productImageFile") MultipartFile file) {
 
         if (newProductBindingResult.hasErrors()) {
-            return "/admin/product/create";
+            return "admin/product/create";
         }
 
         String productImage = this.uploadService.handleSaveUploadFile(file, "product");
@@ -85,7 +85,7 @@ public class ProductController {
             @RequestParam("productImageFile") MultipartFile file) {
 
         if (newProductBindingResult.hasErrors()) {
-            return "/admin/product/update";
+            return "admin/product/update";
         }
         Product currentProduct = this.productService.getProductById(product.getId()).get();
 
