@@ -99,4 +99,45 @@ public class ProductService {
         return this.cartRepository.findByUser(user);
     }
 
+    public void deleteCartDetail(long cartDetailId, HttpSession session) {
+        String email = (String) session.getAttribute("email");
+        Optional<CartDetail> cartDetailOptional = this.cartDetailRepository.findById(cartDetailId);
+        User currentUser = this.userService.getUserByEmail(email);
+        if (currentUser == null) {
+            return;
+        }
+
+        if (cartDetailOptional.isEmpty()) {
+            return;
+        }
+
+        CartDetail cartDetail = cartDetailOptional.get();
+
+        if (cartDetail.getCart() == null) {
+            return;
+        }
+
+        if (cartDetail.getCart().getUser() == null) {
+            return;
+        }
+
+        Cart cart = cartDetail.getCart();
+
+        if (currentUser.getId() != cart.getUser().getId()
+                && !currentUser.getRole().getName().equalsIgnoreCase("admin")) {
+            return;
+        }
+
+        this.cartDetailRepository.delete(cartDetail);
+        int sum = cart.getSum();
+        if (sum == 1) {
+            this.cartRepository.delete(cart);
+        } else {
+            sum -= 1;
+            cart.setSum(sum);
+            this.cartRepository.save(cart);
+            session.setAttribute("sum", sum);
+        }
+    }
+
 }
