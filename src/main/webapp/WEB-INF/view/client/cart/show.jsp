@@ -77,7 +77,11 @@
                                                 </div>
                                             </th>
                                             <td>
-                                                <p class="mb-0 mt-4">${cartDetail.product.name}</p>
+                                                <p class="mb-0 mt-4">
+                                                    <a href="/products/${cartDetail.product.id}" target="_blank">
+                                                        ${cartDetail.product.name}</a>
+                                                </p>
+
                                             </td>
                                             <td>
                                                 <p class="mb-0 mt-4">
@@ -128,7 +132,7 @@
                                         <div class="d-flex justify-content-between mb-4">
                                             <h5 class="mb-0 me-4">Tạm tính:</h5>
                                             <p class="mb-0">
-                                                <fmt:formatNumber type="number" value="${sumPrice}" /> đ
+                                                <fmt:formatNumber type="number" value="${totalPrice}" /> đ
                                             </p>
                                         </div>
                                         <div class="d-flex justify-content-between">
@@ -144,7 +148,7 @@
                                     <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
                                         <h5 class="mb-0 ps-4 me-4">Tổng tiền</h5>
                                         <p class="mb-0 pe-4">
-                                            <fmt:formatNumber type="number" value="${sumPrice}" /> đ
+                                            <fmt:formatNumber type="number" value="${totalPrice}" /> đ
                                         </p>
                                     </div>
                                     <button

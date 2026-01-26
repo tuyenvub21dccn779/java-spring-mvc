@@ -95,15 +95,8 @@ public class ProductService {
 
     }
 
-    public List<CartDetail> getCartDetailList(String email, HttpSession session) {
-        List<CartDetail> cartDetails = new ArrayList<>();
-        User user = this.userService.getUserByEmail(email);
-        if (user != null) {
-            Cart cart = this.cartRepository.findByUser(user);
-            if (cart != null) {
-                cartDetails = this.cartDetailRepository.findByCart(cart);
-            }
-        }
-        return cartDetails;
+    public Cart fetchByUser(User user) {
+        return this.cartRepository.findByUser(user);
     }
+
 }
