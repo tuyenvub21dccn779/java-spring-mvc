@@ -21,9 +21,11 @@
                             <c:if test="${not empty pageContext.request.userPrincipal}">
                                 <a href="#" class="position-relative me-4 my-auto">
                                     <i class="fa fa-shopping-bag fa-2x"></i>
-                                    <span
-                                        class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"
-                                        style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
+                                    <c:if test="${not empty sessionScope.sum}">
+                                        <span
+                                            class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"
+                                            style="top: -5px; left: 15px; height: 20px; min-width: 20px;">${sessionScope.sum}</span>
+                                    </c:if>
                                 </a>
                                 <div class="dropdown my-auto">
                                     <a href="#" class="dropdown" role="button" id="dropdownMenuLink"
@@ -50,7 +52,7 @@
                                             <form method="post" action="/logout">
                                                 <input type="hidden" name="${_csrf.parameterName}"
                                                     value="${_csrf.token}" />
-                                                <button class="dropdown-item" href="#">Đăng xuất</button>
+                                                <button class="dropdown-item">Đăng xuất</button>
                                             </form>
 
                                         </li>
