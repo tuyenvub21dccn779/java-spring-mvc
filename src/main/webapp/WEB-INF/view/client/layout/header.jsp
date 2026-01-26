@@ -19,7 +19,7 @@
                         </div>
                         <div class="d-flex m-3 me-0">
                             <c:if test="${not empty pageContext.request.userPrincipal}">
-                                <a href="#" class="position-relative me-4 my-auto">
+                                <a href="/cart" class="position-relative me-4 my-auto">
                                     <i class="fa fa-shopping-bag fa-2x"></i>
                                     <c:if test="${not empty sessionScope.sum}">
                                         <span

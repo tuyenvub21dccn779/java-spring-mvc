@@ -1,5 +1,6 @@
 package vn.hoidanit.laptopshop.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -76,6 +77,7 @@ public class ProductService {
                     cd.setProduct(realProduct);
                     cd.setPrice(realProduct.getPrice());
                     cd.setQuantity(1);
+                    this.cartDetailRepository.save(cd);
 
                     // update cart (sum)
                     int sum = cart.getSum() + 1;
@@ -91,5 +93,17 @@ public class ProductService {
 
         }
 
+    }
+
+    public List<CartDetail> getCartDetailList(String email, HttpSession session) {
+        List<CartDetail> cartDetails = new ArrayList<>();
+        User user = this.userService.getUserByEmail(email);
+        if (user != null) {
+            Cart cart = this.cartRepository.findByUser(user);
+            if (cart != null) {
+                cartDetails = this.cartDetailRepository.findByCart(cart);
+            }
+        }
+        return cartDetails;
     }
 }
