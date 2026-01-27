@@ -130,13 +130,14 @@ public class ProductService {
 
         this.cartDetailRepository.delete(cartDetail);
         int sum = cart.getSum();
-        if (sum == 1) {
-            this.cartRepository.delete(cart);
-        } else {
+        if (sum > 1) {
             sum -= 1;
             cart.setSum(sum);
             this.cartRepository.save(cart);
             session.setAttribute("sum", sum);
+        } else {
+            this.cartRepository.delete(cart);
+            session.setAttribute("sum", 0);
         }
     }
 
